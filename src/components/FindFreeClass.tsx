@@ -7,6 +7,7 @@ const FindFreeClass = () => {
   const [block, setBlock] = useState('')
   const [floor, setFloor] = useState('')
   const [time, setTime] = useState('')
+  const [day, setDay] = useState('')
   const [results, setResults] = useState<any[]>([])
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -17,6 +18,7 @@ const FindFreeClass = () => {
       .eq('block', block)
       .eq('floor', parseInt(floor))
       .eq('time', time)
+      .eq('day', day)
 
     if (error) {
       console.error('Error fetching free classes:', error)
@@ -65,13 +67,28 @@ const FindFreeClass = () => {
             className="w-full p-2 border border-gray-300 rounded"
           />
         </div>
+        <div>
+          <select 
+            value={day} 
+            onChange={(e) => setDay(e.target.value)} 
+            required
+            className="w-full p-2 border border-gray-300 rounded"
+          >
+            <option value="">Select Day</option>
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+          </select>
+        </div>
         <button type="submit" className="college-button w-full py-2 px-4 rounded">Find</button>
       </form>
       {results.length > 0 ? (
         <ul className="mt-4 space-y-2">
           {results.map((result) => (
             <li key={result.id} className="bg-blue-100 p-2 rounded">
-              Block: {result.block}, Floor: {result.floor}, Class: {result.class_number}, Time: {result.time}
+              Block: {result.block}, Floor: {result.floor}, Class: {result.class_number}, Time: {result.time}, Day: {result.day}
             </li>
           ))}
         </ul>
